@@ -68,22 +68,6 @@ public class ContaComum {
 		}
 		return ext;
 	}
-
-	public Boolean dataMenor(int[] di, int[] da){
-		if (di[2] <= da[2]){
-			if (di[1] <= da[1]){
-				if (di[0] <= da[0]){
-					return true;
-				}else{
-					return false;
-				}
-			}else{
-				return false;
-			}
-		}else{
-			return false;
-		}
-	}
 	
 	public Pessoa getDono() {
 		return dono;

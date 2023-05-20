@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
+
 class ContaComumTest {
 
 	@Test
@@ -62,14 +64,14 @@ class ContaComumTest {
 		c.debito(1000);
 		assertEquals(0, c.getSaldo());
 	}
-	public Boolean dataMenor(int[] di, int[] da){
-		if (di[2] < da[2]){
+	public Boolean dataMenor(Date di, Date da){
+		if (di.getYear() < da.getYear()){
 			return true;
-		}else if (di[2] == da[2]){
-			if (di[1] < da[1]){
+		}else if (di.getYear() == da.getYear()){
+			if (di.getMonth() < da.getMonth()){
 				return true;
-			}else if (di[1] == da[1]){
-				if (di[0] <= da[0]){
+			}else if (di.getMonth() == da.getMonth()){
+				if (di.getDate() <= da.getDate()){
 					return true;
 				}else{
 					return false;
@@ -82,14 +84,14 @@ class ContaComumTest {
 		}
 	}
 
-	public Boolean dataMaior(int[] df, int[] da){
-		if (df[2] > da[2]){
+	public Boolean dataMaior(Date df, Date da){
+		if (df.getYear() > da.getYear()){
 			return true;
-		}else if (df[2] == da[2]){
-			if (df[1] > da[1]){
+		}else if (df.getYear() == da.getYear()){
+			if (df.getMonth() > da.getMonth()){
 				return true;
-			}else if (df[1] == da[1]){
-				if (df[0] >= da[0]){
+			}else if (df.getMonth() == da.getMonth()){
+				if (df.getDate() >= da.getDate()){
 					return true;
 				}else{
 					return false;
@@ -102,17 +104,46 @@ class ContaComumTest {
 		}
 	}
 
+	public Boolean dataEntre(Date di, Date da, Date  df){
+		if (dataMenor(di, da) && dataMaior(df, da)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public Date setData(int[] dt){
+		Date d = new Date();
+		d.setDate(dt[0]);
+		d.setMonth(dt[1]);
+		d.setYear(dt[2]);
+		return d;
+
+	}
+	@Test
+	void testarDataEntreDuasDatas() {
+		int[] dti = {1, 1, 221};
+		int[] dta = {10, 2, 222};
+		int[] dtf = {1, 3, 222};
+		Date di = setData(dti);
+		Date da = setData(dta);
+		Date df = setData(dtf);
+		assertEquals(true, dataEntre(di, da, df));
+	}
 	@Test
 	void testarDataMaior() {
-		int[] di = {10, 10, 2021};
-		int[] da = {10, 10, 2022};
+		int[] dti = {10, 10, 2021};
+		int[] dta = {10, 10, 2022};
+		Date di = setData(dti);
+		Date da = setData(dta);
 		assertEquals(true, dataMenor(di, da));
 	}
 
 	@Test
 	void testarDataMenor() {
-		int[] df = {0, 2, 2021};
-		int[] da = {1, 2, 2021};
+		int[] dtf = {2, 2, 2021};
+		int[] dta = {1, 2, 2021};
+		Date da = setData(dta);
+		Date df = setData(dtf);
 		assertEquals(true, dataMaior(df, da));
 	}
 
