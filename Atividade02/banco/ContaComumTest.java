@@ -62,5 +62,58 @@ class ContaComumTest {
 		c.debito(1000);
 		assertEquals(0, c.getSaldo());
 	}
+	public Boolean dataMenor(int[] di, int[] da){
+		if (di[2] < da[2]){
+			return true;
+		}else if (di[2] == da[2]){
+			if (di[1] < da[1]){
+				return true;
+			}else if (di[1] == da[1]){
+				if (di[0] <= da[0]){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public Boolean dataMaior(int[] df, int[] da){
+		if (df[2] > da[2]){
+			return true;
+		}else if (df[2] == da[2]){
+			if (df[1] > da[1]){
+				return true;
+			}else if (df[1] == da[1]){
+				if (df[0] >= da[0]){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	@Test
+	void testarDataMaior() {
+		int[] di = {10, 10, 2021};
+		int[] da = {10, 10, 2022};
+		assertEquals(true, dataMenor(di, da));
+	}
+
+	@Test
+	void testarDataMenor() {
+		int[] df = {0, 2, 2021};
+		int[] da = {1, 2, 2021};
+		assertEquals(true, dataMaior(df, da));
+	}
 
 }

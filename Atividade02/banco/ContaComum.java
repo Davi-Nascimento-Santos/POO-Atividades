@@ -1,6 +1,6 @@
 package banco;
 import java.util.Date;
-
+import java.text.SimpleDateFormat;
 public class ContaComum {
 	
 	private int num;
@@ -59,6 +59,30 @@ public class ContaComum {
 			ext = ext + extrato[i].getLinha();
 		}
 		return ext;
+	}
+
+	public String getExtrato(Date di, Date df) {
+		String ext = "";
+		for (int i = 0; i < pos; i++) {
+			ext = ext + extrato[i].getLinha();
+		}
+		return ext;
+	}
+
+	public Boolean dataMenor(int[] di, int[] da){
+		if (di[2] <= da[2]){
+			if (di[1] <= da[1]){
+				if (di[0] <= da[0]){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
 	}
 	
 	public Pessoa getDono() {
