@@ -40,7 +40,7 @@ class ContaComumTest {
 
 		c.credito(1000);		
 		c.debito(10);
-		String extrato = "Credito: 1000.0 Saldo: 1000.0\nDebito: 10.0 Saldo: 990.0\n";
+		String extrato = "Credito: 1000.0 Saldo: 1000.0 Data: 19/5/2023\nDebito: 10.0 Saldo: 990.0 Data: 19/5/2023\n";
 		assertEquals(extrato, c.getExtrato());
 	}
 	

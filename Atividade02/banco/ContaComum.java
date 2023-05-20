@@ -1,4 +1,5 @@
 package banco;
+import java.util.Date;
 
 public class ContaComum {
 	
@@ -22,13 +23,15 @@ public class ContaComum {
 	
 	public void credito(double val) {
 		saldo = saldo + val;
-		extrato[pos++] = new Extrato("Credito", val, saldo);
+		Date date = new Date();
+		extrato[pos++] = new Extrato("Credito", val, saldo, date);
 	}
 	
 	public void debito(double val) {
 		if (val <= saldo) { 
-		  saldo = saldo - val;
-			extrato[pos++] = new Extrato("Debito", val, saldo);
+		  	saldo = saldo - val;
+			Date date = new Date();
+			extrato[pos++] = new Extrato("Debito", val, saldo, date);
 		} else {
 			System.out.println("Saldo insuficiente.");
 		}
