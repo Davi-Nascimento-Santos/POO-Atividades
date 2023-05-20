@@ -64,87 +64,20 @@ class ContaComumTest {
 		c.debito(1000);
 		assertEquals(0, c.getSaldo());
 	}
-	public Boolean dataMenor(Date di, Date da){
-		if (di.getYear() < da.getYear()){
-			return true;
-		}else if (di.getYear() == da.getYear()){
-			if (di.getMonth() < da.getMonth()){
-				return true;
-			}else if (di.getMonth() == da.getMonth()){
-				if (di.getDate() <= da.getDate()){
-					return true;
-				}else{
-					return false;
-				}
-			}else{
-				return false;
-			}
-		}else{
-			return false;
-		}
-	}
-
-	public Boolean dataMaior(Date df, Date da){
-		if (df.getYear() > da.getYear()){
-			return true;
-		}else if (df.getYear() == da.getYear()){
-			if (df.getMonth() > da.getMonth()){
-				return true;
-			}else if (df.getMonth() == da.getMonth()){
-				if (df.getDate() >= da.getDate()){
-					return true;
-				}else{
-					return false;
-				}
-			}else{
-				return false;
-			}
-		}else{
-			return false;
-		}
-	}
-
-	public Boolean dataEntre(Date di, Date da, Date  df){
-		if (dataMenor(di, da) && dataMaior(df, da)){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	public Date setData(int[] dt){
-		Date d = new Date();
-		d.setDate(dt[0]);
-		d.setMonth(dt[1]);
-		d.setYear(dt[2]);
-		return d;
-
-	}
-	@Test
-	void testarDataEntreDuasDatas() {
-		int[] dti = {1, 1, 221};
-		int[] dta = {10, 2, 222};
-		int[] dtf = {1, 3, 222};
-		Date di = setData(dti);
-		Date da = setData(dta);
-		Date df = setData(dtf);
-		assertEquals(true, dataEntre(di, da, df));
-	}
-	@Test
-	void testarDataMaior() {
-		int[] dti = {10, 10, 2021};
-		int[] dta = {10, 10, 2022};
-		Date di = setData(dti);
-		Date da = setData(dta);
-		assertEquals(true, dataMenor(di, da));
-	}
 
 	@Test
-	void testarDataMenor() {
-		int[] dtf = {2, 2, 2021};
-		int[] dta = {1, 2, 2021};
-		Date da = setData(dta);
-		Date df = setData(dtf);
-		assertEquals(true, dataMaior(df, da));
+	public void testeGetExtratoComDatas() {
+		Pessoa p = new Pessoa(1);
+		p.setNome("Pedro");
+		ContaComum c = new ContaComum(100, p);
+
+		c.credito(1000);		
+		c.debito(10);
+		c.credito(1000);
+		c.debito(500);
+		int[] di = {19, 6, 2023};
+		int[] df = {22, 7, 2023};
+		System.out.println(c.getExtrato(di, df));
 	}
 
 }

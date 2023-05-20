@@ -16,16 +16,17 @@ public class Extrato {
 	}
 	
 	public String getLinha() {
-		return operacao + ": " + valor + " Saldo: " + saldo + " Data: " + getDate() + "\n";
+		return operacao + ": " + valor + " Saldo: " + saldo + " Data: " + getData() + "\n";
 	}
 
 	public String getOperacao() {
 
 		return operacao;
 	}
-	public String getDate(){
+	public String getData(){
 		return date.getDate() + "/" + (date.getMonth()+1) + "/" + (date.getYear()+1900);
 	}
+	
 	public void setOperacao(String operacao) {
 		this.operacao = operacao;
 	}
@@ -44,5 +45,9 @@ public class Extrato {
 
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
+	}
+
+	public Date getDate() {
+		return date;
 	}
 }

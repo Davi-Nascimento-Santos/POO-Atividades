@@ -1,6 +1,5 @@
 package banco;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 public class ContaComum {
 	
 	private int num;
@@ -60,17 +59,76 @@ public class ContaComum {
 		}
 		return ext;
 	}
-
-	public String getExtrato(Date di, Date df) {
-		String ext = "";
-		for (int i = 0; i < pos; i++) {
-			ext = ext + extrato[i].getLinha();
-		}
-		return ext;
-	}
 	
 	public Pessoa getDono() {
 		return dono;
 	}
-	
+
+	public Boolean dataMenor(Date di, Date da){
+		if (di.getYear() < da.getYear()){
+			return true;
+		}else if (di.getYear() == da.getYear()){
+			if (di.getMonth() < da.getMonth()){
+				return true;
+			}else if (di.getMonth() == da.getMonth()){
+				if (di.getDate() <= da.getDate()){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public Boolean dataMaior(Date df, Date da){
+		if (df.getYear() > da.getYear()){
+			return true;
+		}else if (df.getYear() == da.getYear()){
+			if (df.getMonth() > da.getMonth()){
+				return true;
+			}else if (df.getMonth() == da.getMonth()){
+				if (df.getDate() >= da.getDate()){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public Boolean dataEntre(Date di, Date da, Date  df){
+		if (dataMenor(di, da) && dataMaior(df, da)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public Date setData(int[] dt){
+		Date d = new Date();
+		d.setDate(dt[0]);
+		d.setMonth(dt[1]-1);
+		d.setYear(dt[2]-1900);
+		return d;
+
+	}
+
+	public String getExtrato(int[] di, int[] df) {
+		Date dataInicio = setData(di);
+		Date dataFim = setData(df);
+		String ext = "";
+		for (int i = 0; i < pos; i++) {
+			if (dataEntre(dataInicio, extrato[i].getDate(), dataFim)){
+				ext = ext + extrato[i].getLinha();
+			}
+		}
+		return ext;
+	}
 }
