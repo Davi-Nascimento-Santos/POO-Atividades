@@ -77,7 +77,9 @@ class ContaComumTest {
 		c.debito(500);
 		int[] di = {19, 6, 2023};
 		int[] df = {22, 7, 2023};
-		System.out.println(c.getExtrato(di, df));
+		CriarData dataInicio = new CriarData(di);
+		CriarData dataFim = new CriarData(df);
+		System.out.println(c.getExtrato(dataInicio.getDt(), dataFim.getDt()));
 	}
 
 }

@@ -120,12 +120,12 @@ public class ContaComum {
 
 	}
 
-	public String getExtrato(int[] di, int[] df) {
-		Date dataInicio = setData(di);
-		Date dataFim = setData(df);
+	public String getExtrato(Date di, Date df) {
+		//Date dataInicio = setData(di);
+		//Date dataFim = setData(df);
 		String ext = "";
 		for (int i = 0; i < pos; i++) {
-			if (dataEntre(dataInicio, extrato[i].getDate(), dataFim)){
+			if (dataEntre(di, extrato[i].getDate(), df)){
 				ext = ext + extrato[i].getLinha();
 			}
 		}
