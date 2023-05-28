@@ -28,13 +28,13 @@ public class Produto {
             //Atualiza o preco de compra do produto
             this.precoCompra = (this.quant * this.precoCompra + quant * val) / (this.quant + quant);
             //Atualiza o preco de venda do produto
-            this.precoVenda = this.precoCompra * this.lucro;
+            this.precoVenda = (this.precoCompra * this.lucro) + this.precoCompra;
         }
     }
 
     //Método de venda
     public double venda(int quant){
-        if (quant >= this.quant){
+        if (quant <= this.quant){
             this.quant -= quant;
             return quant * this.precoVenda;
         }else{
@@ -77,7 +77,12 @@ public class Produto {
     }
 
     public Fornecedor getFornecedor() {
-        return fornecedor;
+        return this.fornecedor;
     }
+
+    public int getQuant() {
+        return quant;
+    }
+    
     
 }

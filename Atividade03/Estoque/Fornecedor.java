@@ -22,7 +22,4 @@ public class Fornecedor {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-    
-    
 }
