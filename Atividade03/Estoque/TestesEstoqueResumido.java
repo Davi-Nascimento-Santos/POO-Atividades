@@ -22,7 +22,18 @@ public class TestesEstoqueResumido {
 		Produto[] produtosAbaixoDoMinimo = estoque.estoqueAbaixoDoMinimo();
 		assertArrayEquals(produtosAbaixoDoMinimo, produtos);
 	}
-	
+
+	@Test
+	public void TestarIncluirProdutosComMesmoCodigo(){
+		Estoque estoque = new Estoque();
+		Fornecedor forn1 = new Fornecedor(48, "Nestle");
+		Fornecedor forn2 = new Fornecedor(19, "Ambev");
+		Produto prod1 = new Produto(12, "Sorvete", 5, 1, forn1);
+		Produto prod2 = new Produto(12, "Cerveja", 5, 1, forn2);
+		estoque.incluir(prod1);
+		assertEquals(false, estoque.incluir(prod2));
+	}
+
 	@Test
 	public void compraItens() {
 		Estoque estoque = new Estoque();
@@ -53,7 +64,7 @@ public class TestesEstoqueResumido {
 		estoque.incluir(prod1);
 		estoque.comprar(12, 20, 5);
 		// Verifica se o valor total da venda est� correto
-		assertTrue(1*5 == estoque.vender(12, 1));
+		assertTrue(2*5 == estoque.vender(12, 1));
 	}
 	
 	

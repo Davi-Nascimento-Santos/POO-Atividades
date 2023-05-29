@@ -23,18 +23,18 @@ public class Produto {
     //Método de compra
     public void compra(int quant, double val){
         if (quant > 0 && val > 0){
-            //Atualiza a quantidade de produtos
-            this.quant += quant;
             //Atualiza o preco de compra do produto
             this.precoCompra = (this.quant * this.precoCompra + quant * val) / (this.quant + quant);
             //Atualiza o preco de venda do produto
             this.precoVenda = (this.precoCompra * this.lucro) + this.precoCompra;
+            //Atualiza a quantidade de produtos
+            this.quant += quant;
         }
     }
 
     //Método de venda
     public double venda(int quant){
-        if (quant <= this.quant){
+        if (quant <= this.quant && quant > 0){
             this.quant -= quant;
             return quant * this.precoVenda;
         }else{

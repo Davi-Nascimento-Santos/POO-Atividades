@@ -13,12 +13,14 @@ public class Estoque {
     }
 
     //Método para Incluir produtos
-    public void incluir(Produto p){
+    public boolean incluir(Produto p){
         Produto prod = this.pesquisa(p.getCod());
         if (prod  == null){
             this.produtos[this.quant] = p;
             this.quant++;
+            return true;
         }
+        return false;
     }
 
     ///Método para ver a quantidade de produtos
