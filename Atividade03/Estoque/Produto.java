@@ -1,12 +1,12 @@
 public class Produto {
-    private int cod;
-    private String descricao;
-    private double precoCompra;
-    private double precoVenda;
-    private double lucro;
-    private int quant;
-    private int estoqueMinimo;
-    private Fornecedor fornecedor;
+    protected int cod;
+    protected String descricao;
+    protected double precoCompra;
+    protected double precoVenda;
+    protected double lucro;
+    protected int quant;
+    protected int estoqueMinimo;
+    protected Fornecedor fornecedor;
 
     public Produto(int cod, String desc, int min, double lucro, Fornecedor forn){
         this.cod = cod;
@@ -21,14 +21,14 @@ public class Produto {
     }
 
     //Método de compra
-    public void compra(int quant, double val){
-        if (quant > 0 && val > 0){
+    public void compra(int quant2, double val){
+        if (quant2 > 0 && val > 0){
             //Atualiza o preco de compra do produto
-            this.precoCompra = (this.quant * this.precoCompra + quant * val) / (this.quant + quant);
+            this.precoCompra = (this.quant * this.precoCompra + quant2 * val) / (this.quant + quant2);
             //Atualiza o preco de venda do produto
             this.precoVenda = (this.precoCompra * this.lucro) + this.precoCompra;
             //Atualiza a quantidade de produtos
-            this.quant += quant;
+            this.quant += quant2;
         }
     }
 
@@ -52,7 +52,7 @@ public class Produto {
     }
 
     //Métodos Getters
-    public int getCod() {
+    public int getCodigo() {
         return cod;
     }
 

@@ -1,11 +1,13 @@
+import java.util.Date;
+
 public class Estoque {
     private Produto[] produtos = new Produto[100];
     private int quant = 0;
 
     //Método auxiliar para pesquisar produtos
-    public Produto pesquisa(int cod){
+    public Produto pesquisar(int cod){
         for (int i=0; i< this.quant; i++){
-            if (this.produtos[i].getCod() == cod){
+            if (this.produtos[i].getCodigo() == cod){
                 return this.produtos[i];
             }
         }
@@ -14,7 +16,10 @@ public class Estoque {
 
     //Método para Incluir produtos
     public boolean incluir(Produto p){
-        Produto prod = this.pesquisa(p.getCod());
+        if (p == null || p.getCodigo() < 0 || p.getFornecedor().getCnpj() < 0 || p.getFornecedor().getCnpj() == 0 || p.getDescricao().trim().isEmpty()){
+            return false;
+        }
+        Produto prod = this.pesquisar(p.getCodigo());
         if (prod  == null){
             this.produtos[this.quant] = p;
             this.quant++;
@@ -25,7 +30,7 @@ public class Estoque {
 
     ///Método para ver a quantidade de produtos
     public int quantidade(int cod){
-        Produto prod = pesquisa(cod);
+        Produto prod = pesquisar(cod);
         if (prod != null){
             return prod.getQuant();
         }
@@ -34,7 +39,7 @@ public class Estoque {
 
     //Método para vender um produto
     public double vender(int cod, int quant){
-        Produto prod = pesquisa(cod);
+        Produto prod = pesquisar(cod);
         if (prod == null){
             return -1;
         }
@@ -42,16 +47,18 @@ public class Estoque {
     }
 
     //Método para comprar um produto
-    public void comprar(int cod, int quant, double preco){
-        Produto prod = pesquisa(cod);
+    public void comprar(int cod, int quant, double preco, Date data){
+        Produto prod = pesquisar(cod);
         if (prod != null){
-            prod.compra(quant, preco);
+            if (data == null){
+                prod.compra(quant, preco);
+            }
         }
     }
 
     //Método para pesquisar um fornecedor
     public Fornecedor fornecedor(int cod){
-        Produto prod = pesquisa(cod);
+        Produto prod = pesquisar(cod);
         if (prod != null){
             return prod.getFornecedor();
         }
