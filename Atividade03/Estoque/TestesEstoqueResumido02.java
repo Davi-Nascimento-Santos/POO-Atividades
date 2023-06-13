@@ -108,7 +108,7 @@ public class TestesEstoqueResumido02{
 	
 	
 	// ------------------------------Comprar----------------------------------------
-	/*@Test
+	@Test
 	public void compraProdutoNaoExistente() {
 		Estoque estoque = new Estoque();
 		Fornecedor forn1 = new Fornecedor(48, "Unilever");
@@ -353,6 +353,4 @@ public class TestesEstoqueResumido02{
 			assertTrue(produto == prod3 || produto == prod5);
 		}
 	}
-	*/
-		
 }

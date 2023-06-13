@@ -1,14 +1,16 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Estoque {
-    private Produto[] produtos = new Produto[100];
+    private ArrayList<Produto> produtos = new ArrayList<Produto>();
+    //private Produto[] produtos = new Produto[100];
     private int quant = 0;
 
     //Método auxiliar para pesquisar produtos
     public Produto pesquisar(int cod){
-        for (int i=0; i< this.quant; i++){
-            if (this.produtos[i].getCodigo() == cod){
-                return this.produtos[i];
+        for (Produto p: produtos){
+            if (p.getCodigo() == cod){
+                return p;
             }
         }
         return null;
@@ -21,7 +23,8 @@ public class Estoque {
         }
         Produto prod = this.pesquisar(p.getCodigo());
         if (prod  == null){
-            this.produtos[this.quant] = p;
+            this.produtos.add(p);
+            //this.produtos[this.quant] = p;
             this.quant++;
             return true;
         }
@@ -47,13 +50,20 @@ public class Estoque {
     }
 
     //Método para comprar um produto
-    public void comprar(int cod, int quant, double preco, Date data){
+    public boolean comprar(int cod, int quant, double preco, Date data){
         Produto prod = pesquisar(cod);
         if (prod != null){
             if (data == null){
-                prod.compra(quant, preco);
+                return prod.compra(quant, preco);
+            }else{
+                if (prod instanceof ProdutoPerecivel){
+                    return ((ProdutoPerecivel)prod).compra(quant, preco, data);
+                }
+                return false;
+                
             }
         }
+        return false;
     }
 
     //Método para pesquisar um fornecedor
@@ -65,21 +75,25 @@ public class Estoque {
         return null;
     }
 
-    public Produto[] estoqueAbaixoDoMinimo(){
-        int cont = 0; 
-        for (int i=0; i< this.quant; i++){
-            if (this.produtos[i].abaixoDoMinimo()){
-                cont++;
+    public ArrayList<Produto> estoqueAbaixoDoMinimo(){
+        ArrayList<Produto> abaixoDoMinimo = new ArrayList<Produto>(); 
+        for (Produto p: produtos){
+            if (p.abaixoDoMinimo()){
+                abaixoDoMinimo.add(p);
             }
         }
-        Produto prods[] = new Produto[cont];
-        int posi = 0;
-        for (int i=0; i< this.quant; i++){
-            if (this.produtos[i].abaixoDoMinimo()){
-                prods[posi]=this.produtos[i];
-                posi++;
+        return abaixoDoMinimo;
+    }
+
+    public ArrayList<Produto> estoqueVencido(){
+        ArrayList<Produto> vencidos = new ArrayList<Produto>();
+        for (Produto  p: produtos){
+            if (p instanceof ProdutoPerecivel){
+                if (((ProdutoPerecivel)p).produtoVencido()){
+                    vencidos.add(p);
+                }
             }
         }
-        return prods;
+        return vencidos;
     }
 }

@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,8 +10,13 @@ public class ProdutoPerecivel extends Produto{
     }
 
     //Método para compra
-    public void compra(int quantidade, double val, Date data){
+    public boolean compra(int quantidade, double val, Date data){
         if (quantidade > 0 && val > 0 && data != null){
+            //Verifica se o lote já está vencido
+            Date hoje = new Date(); 
+            if (data.before(hoje)){
+                return false;
+            }
              //Atualiza o preco de compra do produto
             this.precoCompra = (this.quant * this.precoCompra + quant * val) / (this.quant + quant);
             //Atualiza o preco de venda do produto
@@ -20,7 +26,9 @@ public class ProdutoPerecivel extends Produto{
             //Coloca um lote no produto
             Lote l = new Lote(quantidade, data);
             this.lotes.add(l);
-        }        
+            return true;
+        }
+        return false;
     }
 
     //Método para verificar se o produto é válido
@@ -40,6 +48,16 @@ public class ProdutoPerecivel extends Produto{
         return quantidadeProdutos;
     }
 
+
+    public boolean produtoVencido(){
+        Date today = new Date();
+        for (Lote l: lotes){
+            if (l.getDataValidade().after(today)){
+                return true;
+            }
+        }
+        return false;
+    }
     //Método de venda
     /*public void venda(int quant){
         if (quant <= quantidadeProdutosValidos() && quant > 0){

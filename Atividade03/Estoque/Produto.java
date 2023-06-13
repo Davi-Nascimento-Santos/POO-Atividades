@@ -21,7 +21,7 @@ public class Produto {
     }
 
     //Método de compra
-    public void compra(int quant2, double val){
+    public boolean compra(int quant2, double val){
         if (quant2 > 0 && val > 0){
             //Atualiza o preco de compra do produto
             this.precoCompra = (this.quant * this.precoCompra + quant2 * val) / (this.quant + quant2);
@@ -29,7 +29,9 @@ public class Produto {
             this.precoVenda = (this.precoCompra * this.lucro) + this.precoCompra;
             //Atualiza a quantidade de produtos
             this.quant += quant2;
+            return true;
         }
+        return false;
     }
 
     //Método de venda
