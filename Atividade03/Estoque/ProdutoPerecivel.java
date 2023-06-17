@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,10 +16,12 @@ public class ProdutoPerecivel extends Produto{
             if (data.before(hoje)){
                 return false;
             }
-             //Atualiza o preco de compra do produto
-            this.precoCompra = (this.quant * this.precoCompra + quant * val) / (this.quant + quant);
+            //Atualiza o preco de compra do produto
+            super.precoCompra = (super.quant * super.precoCompra + quant * val) / (super.quant + quant);
+            System.out.println(super.precoCompra);
             //Atualiza o preco de venda do produto
-            this.precoVenda = (this.precoCompra * this.lucro) + this.precoCompra;
+            super.precoVenda = (super.precoCompra * super.lucro) + super.precoCompra;
+            System.out.println(super.precoVenda);
             //Atualiza a quantidade de produtos
             this.quant += quantidade;
             //Coloca um lote no produto
@@ -32,9 +33,9 @@ public class ProdutoPerecivel extends Produto{
     }
 
     //Método para verificar se o produto é válido
-    private boolean loteValido(Lote l){
+    public boolean loteValido(Lote l){
         Date today = new Date();
-        return l.getDataValidade().before(today);
+        return l.getDataValidade().after(today);
     }
 
     //Método para verificar quantos produtos válidos há
@@ -58,25 +59,36 @@ public class ProdutoPerecivel extends Produto{
         }
         return false;
     }
+    
     //Método de venda
-    /*public void venda(int quant){
+    public double venda(int quant){
+        int  quantidadeProd = quant;
         if (quant <= quantidadeProdutosValidos() && quant > 0){
-            Date min = new Date();
-            for (int i=0; i < lotes.size(); i++){
-                if (i==0){
-                    
-                    min = lotes.get(i).getDataValidade();
-                } else if (lotes.get(i).getDataValidade().before(min)){
-                        min = lotes.get(i).getDataValidade();
+            for (Lote l: lotes){
+                if (loteValido(l)){
+                    if (quant == l.getQuantidade()){
+                        quant = 0;
+                        l.setQuantidade(0);
+                    }else if (quant > l.getQuantidade() && l.getQuantidade() > 0){
+                        quant -= l.getQuantidade();
+                        l.setQuantidade(0);
+                    }else{
+                        l.setQuantidade(l.getQuantidade() - quant);
+                        quant = 0;
                     }
                 }
+                if (quant == 0){
+                    break;
+                }
             }
-
+            return quantidadeProd * super.getPrecoVenda();
         }
-    }*/
+        return -1;
+    }
 
-
-    
+    public ArrayList<Lote> getLotes() {
+        return lotes;
+    }
 
     
 }

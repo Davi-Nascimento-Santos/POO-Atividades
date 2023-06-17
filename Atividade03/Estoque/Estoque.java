@@ -46,6 +46,9 @@ public class Estoque {
         if (prod == null){
             return -1;
         }
+        if (prod instanceof ProdutoPerecivel){
+            return ((ProdutoPerecivel)prod).venda(quant);
+        }
         return prod.venda(quant);
     }
 

@@ -15,6 +15,8 @@ public class Lote {
     public Date getDataValidade() {
         return dataValidade;
     }
-    
-    
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
 }
