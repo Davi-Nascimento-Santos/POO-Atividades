@@ -81,8 +81,14 @@ public class Estoque {
     public ArrayList<Produto> estoqueAbaixoDoMinimo(){
         ArrayList<Produto> abaixoDoMinimo = new ArrayList<Produto>(); 
         for (Produto p: produtos){
-            if (p.abaixoDoMinimo()){
-                abaixoDoMinimo.add(p);
+            if (p instanceof ProdutoPerecivel){
+                if (((ProdutoPerecivel)p).abaixoDoMinimo()){
+                    abaixoDoMinimo.add(p);
+                }
+            }else if (p instanceof Produto){
+                if (p.abaixoDoMinimo()){
+                    abaixoDoMinimo.add(p);
+                }
             }
         }
         return abaixoDoMinimo;

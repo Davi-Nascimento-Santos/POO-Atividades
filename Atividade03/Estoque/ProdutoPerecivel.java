@@ -17,11 +17,9 @@ public class ProdutoPerecivel extends Produto{
                 return false;
             }
             //Atualiza o preco de compra do produto
-            super.precoCompra = (super.quant * super.precoCompra + quant * val) / (super.quant + quant);
-            System.out.println(super.precoCompra);
+            super.precoCompra = (super.quant * super.precoCompra + quantidade * val) / (super.quant + quantidade);
             //Atualiza o preco de venda do produto
             super.precoVenda = (super.precoCompra * super.lucro) + super.precoCompra;
-            System.out.println(super.precoVenda);
             //Atualiza a quantidade de produtos
             this.quant += quantidade;
             //Coloca um lote no produto
@@ -49,11 +47,23 @@ public class ProdutoPerecivel extends Produto{
         return quantidadeProdutos;
     }
 
+    //Método para verificar se o estoque tá abaixo do mínimo
+    public boolean abaixoDoMinimo(){
+        int quantidade = 0;
+        for (Lote l: lotes){
+            quantidade+= l.getQuantidade();
+        }
+        if (quantidade < super.estoqueMinimo){
+            return true;
+        }
+        return false;
+    }
+
 
     public boolean produtoVencido(){
         Date today = new Date();
         for (Lote l: lotes){
-            if (l.getDataValidade().after(today)){
+            if (l.getDataValidade().before(today)){
                 return true;
             }
         }
