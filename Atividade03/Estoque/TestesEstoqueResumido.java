@@ -353,4 +353,5 @@ public class TestesEstoqueResumido{
 			assertTrue(produto == prod3 || produto == prod5);
 		}
 	}
+		
 }
