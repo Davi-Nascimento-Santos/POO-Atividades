@@ -111,18 +111,8 @@ public class ContaComum {
 			return false;
 		}
 	}
-	public Date setData(int[] dt){
-		Date d = new Date();
-		d.setDate(dt[0]);
-		d.setMonth(dt[1]-1);
-		d.setYear(dt[2]-1900);
-		return d;
-
-	}
 
 	public String getExtrato(Date di, Date df) {
-		//Date dataInicio = setData(di);
-		//Date dataFim = setData(df);
 		String ext = "";
 		for (int i = 0; i < pos; i++) {
 			if (dataEntre(di, extrato[i].getDate(), df)){
