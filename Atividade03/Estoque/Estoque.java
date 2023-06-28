@@ -1,38 +1,44 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Estoque {
+public class Estoque implements InterfaceEstoqueComExcecoes{
     private ArrayList<Produto> produtos = new ArrayList<Produto>();
     //private Produto[] produtos = new Produto[100];
     private int quant = 0;
 
     //Método auxiliar para pesquisar produtos
-    public Produto pesquisar(int cod){
+    public Produto pesquisar(int cod) throws ProdutoInexistente{
         for (Produto p: produtos){
             if (p.getCodigo() == cod){
                 return p;
             }
         }
-        return null;
+        throw new ProdutoInexistente();
     }
 
     //Método para Incluir produtos
-    public boolean incluir(Produto p){
+    public void incluir(Produto p) throws ProdutoJaCadastrado, DadosInvalidos{
         if (p == null || p.getCodigo() < 0 || p.getFornecedor().getCnpj() < 0 || p.getFornecedor().getCnpj() == 0 || p.getDescricao().trim().isEmpty()){
-            return false;
+            throw new DadosInvalidos();
         }
-        Produto prod = this.pesquisar(p.getCodigo());
-        if (prod  == null){
+        try{
+            Produto prod = this.pesquisar(p.getCodigo());
+            if (prod  == null){
             this.produtos.add(p);
             //this.produtos[this.quant] = p;
             this.quant++;
-            return true;
+            } else{
+                throw new ProdutoJaCadastrado(p.getCodigo());
+            }
+        } catch (ProdutoInexistente e){
+            System.out.println(e.getMessage());
+
         }
-        return false;
     }
+        
 
     ///Método para ver a quantidade de produtos
-    public int quantidade(int cod){
+    public int quantidade(int cod) throws ProdutoInexistente{
         Produto prod = pesquisar(cod);
         if (prod != null){
             return prod.getQuant();
@@ -41,10 +47,10 @@ public class Estoque {
     }
 
     //Método para vender um produto
-    public double vender(int cod, int quant){
+    public double vender(int cod, int quant) throws ProdutoInexistente, ProdutoVencido{
         Produto prod = pesquisar(cod);
         if (prod == null){
-            return -1;
+            throw new ProdutoInexistente();
         }
         if (prod instanceof ProdutoPerecivel){
             return ((ProdutoPerecivel)prod).venda(quant);
@@ -53,24 +59,29 @@ public class Estoque {
     }
 
     //Método para comprar um produto
-    public boolean comprar(int cod, int quant, double preco, Date data){
-        Produto prod = pesquisar(cod);
-        if (prod != null){
-            if (data == null){
-                return prod.compra(quant, preco);
-            }else{
-                if (prod instanceof ProdutoPerecivel){
-                    return ((ProdutoPerecivel)prod).compra(quant, preco, data);
+    public void comprar(int cod, int quant, double preco, Date val) throws ProdutoInexistente, DadosInvalidos, ProdutoNaoPerecivel {
+        if (cod < 0 || quant <= 0 || preco <= 0){
+            throw new DadosInvalidos();
+        }   else{
+            Produto prod = pesquisar(cod);
+            if (prod != null){
+                if (val == null){
+                    prod.compra(quant, preco);
+                }else{
+                    if (prod instanceof ProdutoPerecivel){
+                        ((ProdutoPerecivel)prod).compra(quant, preco, val);
+                    } else{
+                        throw new ProdutoNaoPerecivel();
+                    }
                 }
-                return false;
-                
+            } else{
+                throw new ProdutoInexistente();
             }
         }
-        return false;
     }
 
     //Método para pesquisar um fornecedor
-    public Fornecedor fornecedor(int cod){
+    public Fornecedor fornecedor(int cod) throws ProdutoInexistente{
         Produto prod = pesquisar(cod);
         if (prod != null){
             return prod.getFornecedor();
@@ -104,5 +115,10 @@ public class Estoque {
             }
         }
         return vencidos;
+    }
+
+    public int quantidadeVencidos(int cod) throws ProdutoInexistente {
+        Produto prod = pesquisar(cod);
+        return ((ProdutoPerecivel)prod).quantideVencidos();
     }
 }

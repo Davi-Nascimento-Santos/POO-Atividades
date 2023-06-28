@@ -37,7 +37,7 @@ public class Produto {
     }
 
     //Método de venda
-    public double venda(int quant){
+    public double venda(int quant) throws ProdutoVencido{
         if (quant <= this.quant && quant > 0){
             this.quant -= quant;
             return quant * this.precoVenda;

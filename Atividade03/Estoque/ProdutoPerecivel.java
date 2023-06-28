@@ -59,7 +59,19 @@ public class ProdutoPerecivel extends Produto{
         return false;
     }
 
+    //Método para verificar quantos produtos vencidos tem
+    public int quantideVencidos(){
+        int quantidade = 0;
+        Date today = new Date();
+        for (Lote l: lotes){
+            if (l.getDataValidade().before(today)){
+                quantidade+= l.getQuantidade();
+            }
+        }
+        return quantidade;
+    }
 
+    //Método para verificar se um produto é vencido.
     public boolean produtoVencido(){
         Date today = new Date();
         for (Lote l: lotes){
@@ -71,7 +83,7 @@ public class ProdutoPerecivel extends Produto{
     }
     
     //Método de venda
-    public double venda(int quant){
+    public double venda(int quant) throws ProdutoVencido{
         int  quantidadeProd = quant;
         if (quant <= quantidadeProdutosValidos() && quant > 0){
             for (Lote l: lotes){
@@ -92,6 +104,8 @@ public class ProdutoPerecivel extends Produto{
                 }
             }
             return quantidadeProd * super.getPrecoVenda();
+        } else if (quant > 0){
+            throw new ProdutoVencido();
         }
         return -1;
     }
