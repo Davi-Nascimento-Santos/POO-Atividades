@@ -50,7 +50,7 @@ public class Produto {
     }
 
     //Métodos Getters
-    public int getCod() {
+    public int getCodigo() {
         return cod;
     }
 

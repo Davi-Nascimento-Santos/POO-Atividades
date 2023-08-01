@@ -6,7 +6,7 @@ public class Estoque {
     //Método auxiliar para pesquisar produtos
     public Produto pesquisa(int cod){
         for (Produto p: produtos){
-            if (p.getCod() == cod){
+            if (p.getCodigo() == cod){
                 return p;
             }
         }
@@ -15,8 +15,8 @@ public class Estoque {
 
     //Método para Incluir produtos
     public void incluir(Produto p){
-        Produto prod = this.pesquisa(p.getCod());
-        if (prod  == null && p.getCod() > 0 && p.getDescricao().isBlank() == false && p.getEstoqueMinimo() >= 0 && p.getLucro() >=0 && p.getFornecedor().getNome() != null && p.getFornecedor().getNome().isBlank() ==false && p.getFornecedor().getCnpj() > 0){
+        Produto prod = this.pesquisa(p.getCodigo());
+        if (prod  == null && p.getCodigo() > 0 && p.getDescricao().isBlank() == false && p.getEstoqueMinimo() >= 0 && p.getLucro() >=0 && p.getFornecedor().getNome() != null && p.getFornecedor().getNome().isBlank() ==false && p.getFornecedor().getCnpj() > 0){
             produtos.add(p);
         }
     }
@@ -27,7 +27,7 @@ public class Estoque {
         if (prod != null){
             return prod.getQuant();
         }
-        return 0;
+        return -1;
     }
 
     //Método para vender um produto
@@ -36,7 +36,7 @@ public class Estoque {
         if (prod == null){
             return -1;
         }else if(quant <= 0){
-            return 0;
+            return -1;
         }
         return prod.venda(quant);
     }
