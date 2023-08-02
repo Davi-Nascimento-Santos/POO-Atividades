@@ -10,7 +10,10 @@ public class ProdutoPerecivel extends Produto{
 
     //Método para compra
     public boolean compra(int quantidade, double val, Date data){
-        if (quantidade > 0 && val > 0 && data != null){
+        if (quantidade > 0 && val > 0){
+            if (data == null){
+                return false;
+            }
             //Verifica se o lote já está vencido
             Date hoje = new Date(); 
             if (data.before(hoje)){
@@ -47,6 +50,16 @@ public class ProdutoPerecivel extends Produto{
         return quantidadeProdutos;
     }
 
+    public int quantidadeProdutosVencidos(){
+        int quantidadeProdutos = 0;
+        for (Lote l: this.lotes){
+            if (loteValido(l)==false){
+                quantidadeProdutos += l.getQuantidade();
+            }
+        }
+        return quantidadeProdutos;
+    }
+
     //Método para verificar se o estoque tá abaixo do mínimo
     public boolean abaixoDoMinimo(){
         int quantidade = 0;
@@ -61,9 +74,8 @@ public class ProdutoPerecivel extends Produto{
 
 
     public boolean produtoVencido(){
-        Date today = new Date();
         for (Lote l: lotes){
-            if (l.getDataValidade().before(today)){
+            if (loteValido(l)==false){
                 return true;
             }
         }

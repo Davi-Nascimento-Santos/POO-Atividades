@@ -18,7 +18,13 @@ public class Estoque {
 
     //Método para Incluir produtos
     public boolean incluir(Produto p){
-        if (p == null || p.getCodigo() <= 0 || p.getFornecedor().getCnpj() < 0 || p.getFornecedor().getCnpj() == 0 || p.getDescricao().trim().isEmpty()){
+        if (p == null){
+            return false;
+        }
+        if (p.getFornecedor()==null){
+            return false;
+        }
+        if (p == null || p.getCodigo() <= 0 || p.getFornecedor().getCnpj() < 0 || p.getFornecedor().getCnpj() == 0 || p.getDescricao().trim().isEmpty() || p.getEstoqueMinimo() < 0 || p.getLucro() <=0 || p.getFornecedor().getNome().isEmpty() == true || p.getFornecedor().getNome().isBlank()==true){
             return false;
         }
         Produto prod = this.pesquisar(p.getCodigo());
@@ -56,18 +62,14 @@ public class Estoque {
     public boolean comprar(int cod, int quant, double preco, Date data){
         Produto prod = pesquisar(cod);
         if (prod != null){
-            if (data == null){
+            if (prod instanceof ProdutoPerecivel){
+                return ((ProdutoPerecivel)prod).compra(quant, preco, data);
+            } else if (data == null){
                 return prod.compra(quant, preco);
-            }else{
-                if (prod instanceof ProdutoPerecivel){
-                    return ((ProdutoPerecivel)prod).compra(quant, preco, data);
-                }
-                return false;
-                
             }
         }
         return false;
-    }
+    }   
 
     //Método para pesquisar um fornecedor
     public Fornecedor fornecedor(int cod){
@@ -104,5 +106,13 @@ public class Estoque {
             }
         }
         return vencidos;
+    }
+
+    public int quantidadeVencidos(int cod){
+        Produto prod = pesquisar(cod);
+        if (prod != null && prod instanceof ProdutoPerecivel){
+            return ((ProdutoPerecivel)prod).quantidadeProdutosVencidos();
+        }
+        return 0;
     }
 }
