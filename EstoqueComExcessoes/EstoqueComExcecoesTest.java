@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -232,22 +233,9 @@ public class EstoqueComExcecoesTest {
         estoque.incluir(prod1);
         estoque.incluir(prod2);
         estoque.comprar(prod1.getCodigo(), 24, 8, data);
-        try {
-            estoque.comprar(prod1.getCodigo(), 10, 5, data);
-        } catch (ProdutoVencido e) {
-            // TODO: handle exception
-        }
-        try {
-            estoque.comprar(prod2.getCodigo(), 11, 4.23, data);
-        } catch (ProdutoVencido e) {
-            // TODO: handle exception
-        }
-        try {
-            estoque.comprar(prod2.getCodigo(), 5, 2.5, data);
-        } catch (ProdutoVencido e) {
-            // TODO: handle exception
-        }
-
+        estoque.comprar(prod1.getCodigo(), 10, 5, data);
+        estoque.comprar(prod2.getCodigo(), 11, 4.23, data);
+        estoque.comprar(prod2.getCodigo(), 5, 2.5, data);
     }
     
     @Test
@@ -271,6 +259,30 @@ public class EstoqueComExcecoesTest {
             estoque.vender(prod1.getCodigo(), 20);
         } catch (ProdutoVencido e) {
             e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void vendaProdutoPerecivelComValidadeMaiorQueDataAtual()
+            throws ProdutoInexistente, DadosInvalidos, ProdutoNaoPerecivel, ProdutoJaCadastrado, ProdutoVencido, InterruptedException {
+        Estoque estoque = new Estoque();
+        Fornecedor forn1 = new Fornecedor(33, "Nestle");
+        Fornecedor forn2 = new Fornecedor(24, "Ambev");
+        Produto prod1 = new ProdutoPerecivel(14, "Sorvete", 5, 2, forn1);
+        Produto prod2 = new ProdutoPerecivel(15, "Cerveja", 5, 1, forn2);
+        Date data = Date.from(Instant.now(Clock.system(ZoneId.of("America/Sao_Paulo"))));
+        data.setTime(data.getTime() + 120000);
+
+        estoque.incluir(prod1);
+        estoque.incluir(prod2);
+        estoque.comprar(prod1.getCodigo(), 24, 8, data);
+        
+        Thread.sleep(100);
+        
+        try {
+            estoque.vender(prod1.getCodigo(), 20);
+        } catch (ProdutoVencido e) {
+            fail("Nao podia ter impedido a venda!");
         }
     }
     

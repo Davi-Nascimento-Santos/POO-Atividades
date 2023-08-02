@@ -56,7 +56,7 @@ public class Estoque implements InterfaceEstoqueComExcecoes{
 
     //Método para comprar um produto
     public void comprar(int cod, int quant, double preco, Date val) throws ProdutoInexistente, ProdutoNaoPerecivel, DadosInvalidos {
-        if (cod > 0 || quant > 0 || preco > 0){
+        if (cod > 0 && quant > 0 && preco > 0){
             Produto prod = pesquisar(cod);
             if (val == null){
                 prod.compra(quant, preco);
