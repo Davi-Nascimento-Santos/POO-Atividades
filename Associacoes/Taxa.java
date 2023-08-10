@@ -3,14 +3,16 @@ public class Taxa {
     protected int vigencia;
     protected double valorAno;
     protected int parcelas;
-    protected boolean adminstrativa;
-
+    protected boolean administrativa;
+    protected double taxaMensal;
+    
     public Taxa(String nome, int vigencia, double valorAno, int parcelas, boolean administrativa) {
         this.nome = nome;
         this.vigencia = vigencia;
         this.valorAno = valorAno;
         this.parcelas = parcelas;
-        this.adminstrativa = administrativa;
+        this.administrativa = administrativa;
+        this.taxaMensal = valorAno/12;
     }
 
     public String getNome() {
@@ -29,8 +31,14 @@ public class Taxa {
         return parcelas;
     }
 
-    public boolean isAdminstrativa() {
-        return adminstrativa;
+    public boolean isAdministrativa() {
+        return administrativa;
     }
 
+    public double getTaxaMensal() {
+        return taxaMensal;
+    }
+    
+
+    
 }

@@ -1,6 +1,5 @@
-
 public class ReuniaoJaExistente extends Exception {
-    String exc = new String();
+    private String exc = new String();
     public ReuniaoJaExistente(){
         exc = "Reunião já existente!";
     }
