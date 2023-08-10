@@ -11,6 +11,19 @@ public class Associacao {
         this.nome = nome;
     }
 
+    public Associado pesquisa(int num){
+        for (Associado a: associados){
+            if (a.getNumero() === num){
+                return a;
+            }
+        }
+        return null;
+    }
+    
+    public void adicionar(Associado a){
+        associados.add(a);
+    }
+
     public void setNumero(int numero) {
         this.numero = numero;
     }

@@ -65,11 +65,22 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         }
     }
 
-    @Override
-    public void adicionar(int associacao, Associado a)
-            throws AssociacaoNaoExistente, AssociadoJaExistente, ValorInvalido {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'adicionar'");
+    //Método para adiconar um associado
+    public void adicionar(int associacao, Associado a) throws AssociacaoNaoExistente, AssociadoJaExistente, ValorInvalido {
+        if (associacao <= 0 || a.getNome().isEmpty()==true || a.getNome().isBlank()==true || a.getTelefone().isEmpty()==true || a.getTelefone().isBlank()==true || a.getNumero()<=0 || a.getNascimento()==null || a.getDataAssociacao()==null){
+            throw new ValorInvalido();
+        }
+        Associacao ass = pesquisa(associacao);
+        if (ass != null){
+            Associado p = ass.pesquisa(a.getNumero());
+            if (p == null){
+                ass.adicionar(a);
+            }else{
+                throw new AssociadoJaExistente();
+            }
+        }else{
+            throw new AssociacaoNaoExistente();
+        }
     }
 
     @Override
