@@ -1,7 +1,7 @@
 public class ReuniaoNaoExistente extends Exception {
-    private String exc = new String();
+    private String str = new String();
     public ReuniaoNaoExistente(){
-        exc = "Reunião não existente!";
+        str = "Reunião não existente!";
     }
 
 }

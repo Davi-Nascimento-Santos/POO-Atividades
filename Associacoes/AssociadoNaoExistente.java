@@ -1,7 +1,7 @@
 public class AssociadoNaoExistente extends Exception {
-    private String exc = new String();
+    private String str = new String();
     public AssociadoNaoExistente(){
-        exc = "Associado não existente!";
+        str = "Associado não existente!";
     }
 
 }

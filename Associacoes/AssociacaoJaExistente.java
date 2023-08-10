@@ -1,6 +1,6 @@
 public class AssociacaoJaExistente extends Exception {
-    private String exc = new String();
+    private String str = new String();
     public AssociacaoJaExistente(){
-        exc = "Associação já existente!";
+        str = "Associação já existente!";
     }
 }

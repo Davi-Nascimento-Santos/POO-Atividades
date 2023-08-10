@@ -1,6 +1,6 @@
 public class FrequenciaJaRegistrada extends Exception {
-    private String exc = new String();
+    private String str = new String();
     public FrequenciaJaRegistrada(){
-        exc = "Frequencia já registrada!";
+        str = "Frequencia já registrada!";
     }
 }

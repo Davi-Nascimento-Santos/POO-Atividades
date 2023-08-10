@@ -1,7 +1,7 @@
 public class TaxaNaoExistente extends Exception {
-    private String exc = new String();
+    private String str = new String();
     public TaxaNaoExistente(){
-        exc = "Taxa não existente!";
+        str = "Taxa não existente!";
     }
 
 }

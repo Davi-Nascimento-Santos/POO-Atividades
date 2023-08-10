@@ -1,7 +1,7 @@
 public class ValorInvalido extends Exception {
-    private String exc = new String();
+    private String str = new String();
     public ValorInvalido(){
-        exc = "Valor inválido!";
+        str = "Valor inválido!";
     }
 
 }

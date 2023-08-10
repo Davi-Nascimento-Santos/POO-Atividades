@@ -10,6 +10,32 @@ public class Associacao {
         this.numero = numero;
         this.nome = nome;
     }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public ArrayList<Associado> getAssociados() {
+        return associados;
+    }
+
+    public ArrayList<Reuniao> getReunioes() {
+        return reunioes;
+    }
+
+    
     
 
 }

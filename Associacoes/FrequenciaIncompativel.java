@@ -1,8 +1,7 @@
-
 public class FrequenciaIncompativel extends Exception {
-    private String exc = new String();
+    private String str = new String();
     public FrequenciaIncompativel(){
-        exc = "Frequência incompativel!";
+        str = "Frequência incompativel!";
     }
 
 }

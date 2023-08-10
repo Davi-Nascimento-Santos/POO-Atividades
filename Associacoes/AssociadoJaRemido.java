@@ -1,7 +1,7 @@
 public class AssociadoJaRemido extends Exception {
-    private String exc = new String();
+    private String str = new String();
     public AssociadoJaRemido(){
-        exc = "Associado já remido!";
+        str = "Associado já remido!";
     }
 
 }
