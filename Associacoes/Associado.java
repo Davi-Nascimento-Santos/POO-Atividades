@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Associado {
@@ -6,7 +7,7 @@ public class Associado {
     protected String telefone;
     protected Date dataAssociacao;
     protected Date nascimento;
-
+    protected ArrayList<Pagamento> pagamentos = new ArrayList<Pagamento>();
 
     public Associado(int numero, String nome, String telefone, long dataAssociacao, long nascimento) {
         this.numero = numero;
@@ -41,6 +42,11 @@ public class Associado {
 
     public Date getNascimento() {
         return nascimento;
+    }
+
+    public void registrarPagamento(Taxa taxa, double valor, Date data){
+        Pagamento p = new Pagamento(taxa, valor, data);
+        pagamentos.add(p);
     }
     
 }

@@ -55,12 +55,32 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         }
     }
 
-    @Override
-    public void registrarPagamento(int numAssociacao, String taxa, int vigencia, int numAssociado, Date data,
-            double valor)
-            throws AssociacaoNaoExistente, AssociadoNaoExistente, AssociadoJaRemido, TaxaNaoExistente, ValorInvalido {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'registrarPagamento'");
+    //Método para registrar um pagamento de uma taxa de um associado
+    public void registrarPagamento(int numAssociacao, String taxa, int vigencia, int numAssociado, long data, double valor)throws AssociacaoNaoExistente, AssociadoNaoExistente, AssociadoJaRemido, TaxaNaoExistente, ValorInvalido {
+        if (numAssociacao <= 0 || numAssociado <= 0 || taxa.isEmpty()==true || taxa.isBlank()==true || vigencia <=0 || valor <= 0){
+            throw new ValorInvalido();
+        }
+        Associacao ass = pesquisa(numAssociacao);
+        if (ass != null){
+            Associado a = ass.pesquisarAssociado(numAssociado);
+            if (a != null){
+                Taxa t = ass.pesquisarTaxa(taxa, vigencia);
+                if (t != null){
+                    Date dt = new Date(data);
+                    if (valor >= t.getTaxaMensal()){
+                        a.registrarPagamento(t, valor, dt);
+                    }else{
+                        throw new ValorInvalido();
+                    }
+                }else{
+                    throw new TaxaNaoExistente();
+                }
+            }else{
+                throw new AssociadoNaoExistente();
+            }
+        }else{
+            throw new AssociacaoNaoExistente();
+        }
     }
 
     @Override

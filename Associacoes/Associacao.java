@@ -52,6 +52,16 @@ public class Associacao {
         }
         return null;
     }
+
+    //Método para pesquisar uma taxa usando o nome da taxa e a vigencia como campos de busca
+    public Taxa pesquisarTaxa(String nome, int vigencia){
+        for (Taxa t: taxas){
+            if (t.getNome()==nome && t.getVigencia()==vigencia){
+                return t;
+            }
+        }
+        return null;
+    }
     
     //Método para adicionar um associado
     public void adicionarAssociado(Associado a) throws ValorInvalido, AssociadoJaExistente{

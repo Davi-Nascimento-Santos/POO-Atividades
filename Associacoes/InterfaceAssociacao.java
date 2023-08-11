@@ -23,7 +23,7 @@ public interface InterfaceAssociacao {
     // para esse caso. Caso o valor a ser pago seja menor que o mínimo 
     // (não sendo o ultimo do ano!) ou gerando pagamento maior que a taxa anual,
     // gerar exceção de ValorInvalido. Lembrar de verificar valores negativos.
-    public void registrarPagamento(int numAssociacao, String taxa, int vigencia, int numAssociado, Date data, double valor) throws AssociacaoNaoExistente, AssociadoNaoExistente, AssociadoJaRemido, TaxaNaoExistente, ValorInvalido;
+    public void registrarPagamento(int numAssociacao, String taxa, int vigencia, int numAssociado, long data, double valor) throws AssociacaoNaoExistente, AssociadoNaoExistente, AssociadoJaRemido, TaxaNaoExistente, ValorInvalido;
     
     // Calcula o total de pagamentos realizado por um associado, em uma associação,
     // para uma taxa, que possui uma vigência, dentro de um certo período de tempo.
