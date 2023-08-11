@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Associacao {
     protected int numero;
@@ -30,6 +31,16 @@ public class Associacao {
             }
         }
         return null;
+    }
+
+    //Método para pesquisar uma reunião pela data
+    public Reuniao pesquisarReuniao(Date data) throws ReuniaoNaoExistente{
+        for (Reuniao r: reunioes){
+            if (r.getData().equals(data)){
+                return r;
+            }
+        }
+        throw new ReuniaoNaoExistente();
     }
 
     //Método para pesquisar uma taxa

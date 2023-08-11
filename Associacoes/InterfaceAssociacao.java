@@ -9,7 +9,7 @@ public interface InterfaceAssociacao {
     // Registra a frequencia de um associado em uma reunião.
     // não deveria registrar participacao em reunioes acontecidas antes
     // da sua filiacao na associação.
-    public void registrarFrequencia(int codigoAssociado, int numAssociacao, Date dataReuniao)throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente, FrequenciaJaRegistrada, FrequenciaIncompativel;
+    public void registrarFrequencia(int codigoAssociado, int numAssociacao, long dataReuniao)throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente, FrequenciaJaRegistrada, FrequenciaIncompativel;
     
     // Registra o pagamento de uma taxa, em uma associação,
     // dentro uma determinada competência, para um associado.

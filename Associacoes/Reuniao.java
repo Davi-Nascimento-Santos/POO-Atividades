@@ -11,6 +11,23 @@ public class Reuniao {
         this.data = dt;
     }
 
+    public Associado pesquisarParticipante(Associado a){
+        for (Associado ass: participantes){
+            if (a.getNumero()==ass.getNumero()){
+                return ass;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarParticante(Associado a) throws FrequenciaJaRegistrada{
+        if (pesquisarParticipante(a)==null){
+            participantes.add(a);
+        }else{
+            throw new FrequenciaJaRegistrada();
+        }
+    }
+
     public String getAta() {
         return ata;
     }

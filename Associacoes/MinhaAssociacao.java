@@ -11,12 +11,24 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         throw new UnsupportedOperationException("Unimplemented method 'calcularFrequencia'");
     }
 
-    @Override
-    public void registrarFrequencia(int codigoAssociado, int numAssociacao, Date dataReuniao)
-            throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente, FrequenciaJaRegistrada,
-            FrequenciaIncompativel {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'registrarFrequencia'");
+    //Método para registrar a frequencia de um associado em uma reuniao
+    public void registrarFrequencia(int codigoAssociado, int numAssociacao, long dataReuniao) throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente, FrequenciaJaRegistrada, FrequenciaIncompativel {
+        Date dt = new Date(dataReuniao);
+        Associacao ass = pesquisa(numAssociacao);
+        if (ass!=null){
+            if (ass.pesquisarAssociado(codigoAssociado)!=null){
+                Associado a = ass.pesquisarAssociado(codigoAssociado);
+                if (a.getDataAssociacao().after(dt)){
+                    throw new FrequenciaIncompativel();
+                }
+                Reuniao r = ass.pesquisarReuniao(dt);
+                r.adicionarParticante(a);
+            }else{
+                throw new AssociadoNaoExistente();
+            }
+        }else{
+            throw new AssociacaoNaoExistente();
+        }
     }
 
     @Override
