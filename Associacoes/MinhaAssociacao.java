@@ -79,7 +79,7 @@ public class MinhaAssociacao implements InterfaceAssociacao {
                         throw new ValorInvalido();
                     }
                 }
-                ass.adicionar(a);
+                ass.adicionarAssociado(a);
             }else{
                 throw new AssociadoJaExistente();
             }
@@ -90,8 +90,20 @@ public class MinhaAssociacao implements InterfaceAssociacao {
 
     @Override
     public void adicionar(int associacao, Reuniao r) throws AssociacaoNaoExistente, ReuniaoJaExistente, ValorInvalido {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'adicionar'");
+        if (associacao <= 0 || r.getAta().isEmpty()==true || r.getAta().isBlank()==true || r.getData()==null){
+            throw new ValorInvalido();
+        }
+        Associacao ass = pesquisa(associacao);
+        if (ass != null){
+            for (Reuniao reuniao: ass.getReunioes()){
+                if (r.getAta()==reuniao.getAta() && r.getData()==reuniao.getData()){
+                    throw new ReuniaoJaExistente();
+                }
+            }
+            ass.adicionarReuniao(r);
+        }else{
+            throw new AssociacaoNaoExistente();
+        }    
     }
 
     @Override

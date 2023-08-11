@@ -20,8 +20,12 @@ public class Associacao {
         return null;
     }
     
-    public void adicionar(Associado a){
+    public void adicionarAssociado(Associado a){
         associados.add(a);
+    }
+
+    public void adicionarReuniao(Reuniao r){
+        reunioes.add(r);
     }
 
     public void setNumero(int numero) {
