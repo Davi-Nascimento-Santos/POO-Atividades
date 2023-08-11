@@ -4,11 +4,35 @@ import java.util.Date;
 public class MinhaAssociacao implements InterfaceAssociacao {
     protected ArrayList<Associacao> associacoes = new ArrayList<Associacao>();
 
-    @Override
-    public double calcularFrequencia(int numAssociado, int numAssociacao, Date inicio, Date fim)
-            throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularFrequencia'");
+    //Método para 
+    public double calcularFrequencia(int numAssociado, int numAssociacao, long inicio, long fim) throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente {
+        Date dataInicio = new Date(inicio);
+        Date dataFim = new Date(fim);
+        Associacao ass = pesquisa(numAssociacao);
+        if (ass != null){
+            Associado a = ass.pesquisarAssociado(numAssociado);
+            if (a != null){
+                double frequencia = 0;
+                double totalReunioes = 0;
+                for (Reuniao r: ass.getReunioes()){
+                    if (r.getData().compareTo(dataInicio) >=0 && r.getData().compareTo(dataFim)<=0){
+                        if (r.pesquisarParticipante(numAssociado)!=null){
+                            frequencia++;
+                        }
+                        totalReunioes++;   
+                    }
+                }
+                if (totalReunioes==0){
+                    throw new ReuniaoNaoExistente();
+                }else{
+                    return frequencia / totalReunioes;
+                }
+            }else{
+                throw new AssociadoNaoExistente();
+            }
+        }else{
+            throw new AssociacaoNaoExistente();
+        }
     }
 
     //Método para registrar a frequencia de um associado em uma reuniao

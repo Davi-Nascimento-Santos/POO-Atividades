@@ -84,7 +84,7 @@ public class Associacao {
         }
     }
 
-    //Metódo para adicionar uma taxa
+    //Método para adicionar uma taxa
     public void adicionarTaxa(Taxa t) throws ValorInvalido, TaxaJaExistente{
         if (t.getNome().isBlank()==true || t.getNome().isEmpty()==true || t.getParcelas()<=0 || t.getTaxaMensal()<=0 || t.getValorAno()<=0 || t.getVigencia()<=0){
             throw new ValorInvalido();
@@ -111,4 +111,9 @@ public class Associacao {
     public String getNome() {
         return nome;
     }
+
+    public ArrayList<Reuniao> getReunioes() {
+        return reunioes;
+    }
+    
 }

@@ -20,6 +20,15 @@ public class Reuniao {
         return null;
     }
 
+    public Associado pesquisarParticipante(int numAssociado){
+        for (Associado ass: participantes){
+            if (numAssociado==ass.getNumero()){
+                return ass;
+            }
+        }
+        return null;
+    }
+
     public void adicionarParticante(Associado a) throws FrequenciaJaRegistrada{
         if (pesquisarParticipante(a)==null){
             participantes.add(a);

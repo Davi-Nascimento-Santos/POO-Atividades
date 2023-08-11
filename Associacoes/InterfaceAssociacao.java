@@ -4,7 +4,7 @@ public interface InterfaceAssociacao {
     // Calcula a frequência de um associado nas reuniões ocorridas 
     // durante um determinado período, retornando um número entre 0 e 1 
     // (ex: 0,6, indicando que o associado participou de 60% das reuniões.
-    public double calcularFrequencia(int numAssociado, int numAssociacao, Date inicio, Date fim) throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente;
+    public double calcularFrequencia(int numAssociado, int numAssociacao, long inicio, long fim) throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente;
         
     // Registra a frequencia de um associado em uma reunião.
     // não deveria registrar participacao em reunioes acontecidas antes
