@@ -65,51 +65,43 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         }
     }
 
-    //Método para adiconar um associado
+    //Método para adicionar um associado
     public void adicionar(int associacao, Associado a) throws AssociacaoNaoExistente, AssociadoJaExistente, ValorInvalido {
-        if (associacao <= 0 || a.getNome().isEmpty()==true || a.getNome().isBlank()==true || a.getTelefone().isEmpty()==true || a.getTelefone().isBlank()==true || a.getNumero()<=0 || a.getNascimento()==null || a.getDataAssociacao()==null){
+        if (associacao <= 0){
             throw new ValorInvalido();
         }
         Associacao ass = pesquisa(associacao);
         if (ass != null){
-            Associado p = ass.pesquisa(a.getNumero());
-            if (p == null){
-                if (p instanceof AssociadoRemido){
-                    if (((AssociadoRemido)p).getDataRemissao()==null){
-                        throw new ValorInvalido();
-                    }
-                }
-                ass.adicionarAssociado(a);
-            }else{
-                throw new AssociadoJaExistente();
-            }
+            ass.adicionarAssociado(a);
         }else{
             throw new AssociacaoNaoExistente();
         }
     }
 
-    @Override
+    //Método para adicionar uma reunião
     public void adicionar(int associacao, Reuniao r) throws AssociacaoNaoExistente, ReuniaoJaExistente, ValorInvalido {
-        if (associacao <= 0 || r.getAta().isEmpty()==true || r.getAta().isBlank()==true || r.getData()==null){
+        if (associacao <= 0){
             throw new ValorInvalido();
         }
         Associacao ass = pesquisa(associacao);
         if (ass != null){
-            for (Reuniao reuniao: ass.getReunioes()){
-                if (r.getAta()==reuniao.getAta() && r.getData()==reuniao.getData()){
-                    throw new ReuniaoJaExistente();
-                }
-            }
             ass.adicionarReuniao(r);
         }else{
             throw new AssociacaoNaoExistente();
         }    
     }
 
-    @Override
+    //Método para adicionar uma taxa
     public void adicionar(int associacao, Taxa t) throws AssociacaoNaoExistente, TaxaJaExistente, ValorInvalido {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'adicionar'");
+        if (associacao <=0){
+            throw new ValorInvalido();
+        }
+        Associacao ass = pesquisa(associacao);
+        if (ass != null){
+            ass.adicionarTaxa(t);
+        }else{
+            throw new AssociacaoNaoExistente();
+        }
     }
     
 }
