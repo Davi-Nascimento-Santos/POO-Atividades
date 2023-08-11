@@ -74,6 +74,11 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         if (ass != null){
             Associado p = ass.pesquisa(a.getNumero());
             if (p == null){
+                if (p instanceof AssociadoRemido){
+                    if (((AssociadoRemido)p).getDataRemissao()==null){
+                        throw new ValorInvalido();
+                    }
+                }
                 ass.adicionar(a);
             }else{
                 throw new AssociadoJaExistente();

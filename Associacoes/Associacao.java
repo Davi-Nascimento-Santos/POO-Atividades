@@ -13,7 +13,7 @@ public class Associacao {
 
     public Associado pesquisa(int num){
         for (Associado a: associados){
-            if (a.getNumero() === num){
+            if (a.getNumero() == num){
                 return a;
             }
         }

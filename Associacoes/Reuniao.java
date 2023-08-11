@@ -5,9 +5,10 @@ public class Reuniao {
     protected String ata;
     protected Date data;
     protected ArrayList<Associado> participantes = new ArrayList<Associado>();
-    public Reuniao(Date data, String ata) {
+    public Reuniao(long data, String ata) {
+        Date dt = new Date(data);
         this.ata = ata;
-        this.data = data;
+        this.data = dt;
     }
 
     public String getAta() {
