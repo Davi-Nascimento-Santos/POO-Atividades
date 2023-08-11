@@ -10,6 +10,18 @@ public class Pagamento {
         this.valor = valor;
         this.data = data;
     }
+
+    public Taxa getTaxa() {
+        return taxa;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public Date getData() {
+        return data;
+    }
     
     
     

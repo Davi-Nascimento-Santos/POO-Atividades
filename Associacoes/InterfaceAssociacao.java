@@ -27,7 +27,7 @@ public interface InterfaceAssociacao {
     
     // Calcula o total de pagamentos realizado por um associado, em uma associação,
     // para uma taxa, que possui uma vigência, dentro de um certo período de tempo.
-    public double somarPagamentoDeAssociado (int numAssociacao, int numAssociado, String nomeTaxa, int vigencia, Date inicio, Date fim) throws AssociacaoNaoExistente, AssociadoNaoExistente, TaxaNaoExistente;
+    public double somarPagamentoDeAssociado (int numAssociacao, int numAssociado, String nomeTaxa, int vigencia, long inicio, long fim) throws AssociacaoNaoExistente, AssociadoNaoExistente, TaxaNaoExistente;
     
     // Calcula o total de taxas previstas para um dado ano, em uma associação.
     public double calcularTotalDeTaxas (int numAssociacao, int vigencia) throws AssociacaoNaoExistente, TaxaNaoExistente;

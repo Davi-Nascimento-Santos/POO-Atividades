@@ -48,5 +48,19 @@ public class Associado {
         Pagamento p = new Pagamento(taxa, valor, data);
         pagamentos.add(p);
     }
+
+
+    public ArrayList<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
+
+    public Taxa pesquisaTaxa(String nome, int vigencia){
+        for (Pagamento p: pagamentos){
+            if (p.getTaxa().getVigencia()==vigencia && p.getTaxa().getNome()==nome){
+                return p.getTaxa();
+            }
+        }
+        return null;
+    }
     
 }

@@ -63,6 +63,9 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         Associacao ass = pesquisa(numAssociacao);
         if (ass != null){
             Associado a = ass.pesquisarAssociado(numAssociado);
+            if (a instanceof AssociadoRemido){
+                throw new AssociadoJaRemido();
+            }
             if (a != null){
                 Taxa t = ass.pesquisarTaxa(taxa, vigencia);
                 if (t != null){
@@ -83,11 +86,33 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         }
     }
 
-    @Override
-    public double somarPagamentoDeAssociado(int numAssociacao, int numAssociado, String nomeTaxa, int vigencia,
-            Date inicio, Date fim) throws AssociacaoNaoExistente, AssociadoNaoExistente, TaxaNaoExistente {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'somarPagamentoDeAssociado'");
+    //Método para somar os pagamentos de um associado
+    public double somarPagamentoDeAssociado(int numAssociacao, int numAssociado, String nomeTaxa, int vigencia, long inicio, long fim) throws AssociacaoNaoExistente, AssociadoNaoExistente, TaxaNaoExistente {
+        Associacao ass = pesquisa(numAssociacao);
+        if (ass != null){
+            Associado a = ass.pesquisarAssociado(numAssociado);
+            if (a != null){
+                if (a.pesquisaTaxa(nomeTaxa, vigencia) != null){
+                    double total = 0;
+                    Date dataInicio = new Date(inicio);
+                    Date dataFim = new Date(fim);
+                    for (Pagamento p: a.getPagamentos()){
+                        if (p.getData().compareTo(dataInicio)>=0 && p.getData().compareTo(dataFim)<=0 && p.getTaxa().getNome()==nomeTaxa && p.getTaxa().getVigencia()==vigencia){
+                            total += p.getValor();
+                        }
+                    }
+                    return total;
+                }else{
+                    throw new TaxaNaoExistente();
+                }
+            }else{
+                throw new AssociadoNaoExistente();
+            }
+
+        }else{
+            throw new AssociacaoNaoExistente();
+        }   
+    
     }
 
     //Método para calcular o total de taxas de uma associação
