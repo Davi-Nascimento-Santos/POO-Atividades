@@ -4,7 +4,7 @@ import java.util.Date;
 public class MinhaAssociacao implements InterfaceAssociacao {
     protected ArrayList<Associacao> associacoes = new ArrayList<Associacao>();
 
-    //Método para 
+    //Método para calcular a frequência de um associado nas reuniões
     public double calcularFrequencia(int numAssociado, int numAssociacao, long inicio, long fim) throws AssociadoNaoExistente, ReuniaoNaoExistente, AssociacaoNaoExistente {
         Date dataInicio = new Date(inicio);
         Date dataFim = new Date(fim);
@@ -70,11 +70,27 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         throw new UnsupportedOperationException("Unimplemented method 'somarPagamentoDeAssociado'");
     }
 
-    @Override
-    public double calcularTotalDeTaxas(int numAssociacao, int vigencia)
-            throws AssociacaoNaoExistente, TaxaNaoExistente {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularTotalDeTaxas'");
+    //Método para calcular o total de taxas de uma associação
+    public double calcularTotalDeTaxas(int numAssociacao, int vigencia) throws AssociacaoNaoExistente, TaxaNaoExistente {
+        Associacao ass = pesquisa(numAssociacao);
+        if (ass != null){
+            double total = 0;
+            int quant = 0;
+            for (Taxa t: ass.getTaxas()){
+                if (t.getVigencia() == vigencia){
+                    total += t.getValorAno();
+                    quant++;
+                }
+            }
+            if (quant == 0){
+                throw new TaxaNaoExistente();
+            }else{
+                return total;
+            }
+        }else{
+            throw new AssociacaoNaoExistente();
+        }
+
     }
 
     //Método para pesquisar uma associação

@@ -115,5 +115,11 @@ public class Associacao {
     public ArrayList<Reuniao> getReunioes() {
         return reunioes;
     }
+
+    public ArrayList<Taxa> getTaxas() {
+        return taxas;
+    }
+
+    
     
 }
