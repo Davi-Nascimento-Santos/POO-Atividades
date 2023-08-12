@@ -62,5 +62,15 @@ public class Associado {
         }
         return null;
     }
+
+    public double totalPagoTaxa(String taxa, int vigencia){
+        int total =0;
+        for (Pagamento p: pagamentos){
+            if (p.getTaxa().getNome()==taxa && p.getTaxa().getVigencia()==vigencia){
+                total += p.getValor();
+            }
+        }
+        return total;
+    }
     
 }

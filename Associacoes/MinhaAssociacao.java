@@ -60,17 +60,19 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         if (numAssociacao <= 0 || numAssociado <= 0 || taxa.isEmpty()==true || taxa.isBlank()==true || vigencia <=0 || valor <= 0){
             throw new ValorInvalido();
         }
+        Date dt = new Date(data);
         Associacao ass = pesquisa(numAssociacao);
         if (ass != null){
             Associado a = ass.pesquisarAssociado(numAssociado);
-            if (a instanceof AssociadoRemido){
-                throw new AssociadoJaRemido();
-            }
             if (a != null){
                 Taxa t = ass.pesquisarTaxa(taxa, vigencia);
                 if (t != null){
-                    Date dt = new Date(data);
-                    if (valor >= t.getTaxaMensal()){
+                    if (valor >= t.getTaxaMensal() || valor >= (t.getValorAno() - a.totalPagoTaxa(taxa, vigencia))){
+                        if ( a instanceof AssociadoRemido){
+                            if (((AssociadoRemido)a).getDataRemissao().compareTo(dt)<=0 && t.isAdministrativa()){
+                                throw new AssociadoJaRemido();
+                            }
+                        }
                         a.registrarPagamento(t, valor, dt);
                     }else{
                         throw new ValorInvalido();
@@ -92,27 +94,25 @@ public class MinhaAssociacao implements InterfaceAssociacao {
         if (ass != null){
             Associado a = ass.pesquisarAssociado(numAssociado);
             if (a != null){
-                if (a.pesquisaTaxa(nomeTaxa, vigencia) != null){
-                    double total = 0;
-                    Date dataInicio = new Date(inicio);
-                    Date dataFim = new Date(fim);
-                    for (Pagamento p: a.getPagamentos()){
-                        if (p.getData().compareTo(dataInicio)>=0 && p.getData().compareTo(dataFim)<=0 && p.getTaxa().getNome()==nomeTaxa && p.getTaxa().getVigencia()==vigencia){
-                            total += p.getValor();
-                        }
+                double total = 0;
+                Date dataInicio = new Date(inicio);
+                Date dataFim = new Date(fim);
+                for (Pagamento p: a.getPagamentos()){
+                    if (p.getData().compareTo(dataInicio)>=0 && p.getData().compareTo(dataFim)<=0 && p.getTaxa().getNome()==nomeTaxa && p.getTaxa().getVigencia()==vigencia){
+                        total += p.getValor();
                     }
-                    return total;
-                }else{
+                }
+                if (a.getPagamentos().size()==0){
                     throw new TaxaNaoExistente();
                 }
+                return total;
             }else{
                 throw new AssociadoNaoExistente();
             }
 
         }else{
             throw new AssociacaoNaoExistente();
-        }   
-    
+        }
     }
 
     //Método para calcular o total de taxas de uma associação

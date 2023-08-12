@@ -12,6 +12,4 @@ public class AssociadoRemido extends Associado {
     public Date getDataRemissao() {
         return dataRemissao;
     }
-    
-    
 }
