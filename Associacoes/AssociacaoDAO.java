@@ -24,6 +24,27 @@ public class AssociacaoDAO{
         }
     }
 
+    public Associacao pesquisarAssociacao(int numero){
+        Associacao a = null;
+        Connection con;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/MinhaAssociacao", "root", "@Davi19072001");
+            String pesquisa = "select * from Associacao where numero = " + numero;
+            Statement stmt = con.createStatement();
+            ResultSet resultado = stmt.executeQuery(pesquisa);
+            if(resultado.next()){
+                int numeroAssociacao = resultado.getInt("numero");
+                String nome = resultado.getString("nome");
+                a = new Associacao(numeroAssociacao, nome);
+            }
+        }catch(Exception e){
+            System.out.println("Erro: " + e.getMessage());
+        }
+        return a;
+
+    }
+
     public void removerTodos(){
         Connection con;
         try{
