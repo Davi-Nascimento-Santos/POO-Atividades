@@ -8,12 +8,12 @@ import org.junit.Test;
 public class TesteAssociacaoResumido {
 
     @Test
-    public void testarCadastroDeAssociacao() throws AssociacaoJaExistente, ValorInvalido {
-        InterfaceAssociacao controle = new MinhaAssociacao();
+    public void testarCadastroDeAssociacao() throws AssociacaoJaExistente, ValorInvalido, AssociacaoNaoExistente {
+        AssociacaoDAO controle = new AssociacaoDAO();
+        controle.removerTodos();
         Associacao a1 = new Associacao(1306, "");
         a1.setNome("Cruzeiro do Sul V");
         controle.adicionar(a1);
-
         try {
             controle.adicionar(a1);
             fail("Deveria ter dado erro! Cadastro de mesma associacao");
@@ -24,7 +24,8 @@ public class TesteAssociacaoResumido {
 
     @Test
     public void testarCadastroDeAssociacaoComNomeVazio() throws AssociacaoJaExistente, ValorInvalido {
-        InterfaceAssociacao controle = new MinhaAssociacao();
+        AssociacaoDAO controle = new AssociacaoDAO();
+        controle.removerTodos();
         Associacao a1 = new Associacao(1306, "");
 
         //Tentativa de cadastrar com sem nome
@@ -37,8 +38,9 @@ public class TesteAssociacaoResumido {
     }
 
     @Test
-    public void testarCadastroDeAssociacaoComNomeNulo() throws AssociacaoJaExistente, ValorInvalido {
-        InterfaceAssociacao controle = new MinhaAssociacao();
+    public void testarCadastroDeAssociacaoComNomeNulo() throws AssociacaoJaExistente, ValorInvalido{
+        AssociacaoDAO controle = new AssociacaoDAO();
+        controle.removerTodos();
         Associacao a1 = new Associacao(1306, null);
 
         //Tentativa de cadastrar com sem nome
@@ -97,7 +99,7 @@ public class TesteAssociacaoResumido {
         Associacao a1 = new Associacao(1306, "Cruzeiro do Sul V");
         controle.adicionar(a1);
         Taxa taxa1 = new Taxa("ManutenâˆšÃŸâˆšÂ£o", 2021, 600, 12, true);
-        controle.adicionar(1306, taxa1);
+        controle.adicionar( 1306,taxa1);
         try {
             controle.adicionar(1306, taxa1);
             fail("Era pra ter dado erro! Cadastro de mesma taxa");
