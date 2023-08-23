@@ -3,4 +3,7 @@ public class AssociacaoJaExistente extends Exception {
     public AssociacaoJaExistente(){
         str = "Associação já existente!";
     }
+    public String toString(){
+        return str;
+    }
 }
